@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio personal mahasiswa Web Developer dengan keahlian Python, Flask, dan pengembangan web modern.">
+    <meta name="author" content="{{ profil.nama }}">
+    <title>{% block title %}{{ profil.nama }} - {{ profil.tagline }}{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+
+    <!-- Bootstrap 5 CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome (icons) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+                <span class="brand-dot">.</span>portfolio
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if halaman == 'beranda' %}active{% endif %}" href="{{ url_for('index') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if halaman == 'tentang' %}active{% endif %}" href="{{ url_for('tentang') }}">Tentang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if halaman == 'proyek' or halaman == 'detail_proyek' %}active{% endif %}" href="{{ url_for('proyek') }}">Proyek</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if halaman == 'kontak' %}active{% endif %}" href="{{ url_for('kontak') }}">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== HALAMAN BERANDA ===================== -->
+    {% if halaman == 'beranda' %}
+    <!-- Hero Section -->
+    <header class="hero-section" id="beranda">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <p class="hero-greeting">Halo, perkenalkan saya</p>
+                    <h1 class="hero-name">{{ profil.nama }}</h1>
+                    <h2 class="hero-tagline">{{ profil.tagline }}</h2>
+                    <p class="hero-description">{{ profil.deskripsi }}</p>
+                    <div class="hero-actions">
+                        <a href="{{ url_for('proyek') }}" class="btn btn-primary-custom me-2">
+                            <i class="fas fa-briefcase"></i> Lihat Proyek
+                        </a>
+                        <a href="{{ url_for('kontak') }}" class="btn btn-outline-custom">
+                            <i class="fas fa-paper-plane"></i> Hubungi Saya
+                        </a>
+                    </div>
+                    <div class="hero-social">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="mailto:{{ profil.email }}" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center" data-aos="fade-left">
+                    <div class="hero-image-wrapper">
+                        <div class="hero-image-circle">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="floating-badge badge-1">
+                            <i class="fab fa-python"></i> Python
+                        </div>
+                        <div class="floating-badge badge-2">
+                            <i class="fas fa-flask"></i> Flask
+                        </div>
+                        <div class="floating-badge badge-3">
+                            <i class="fab fa-html5"></i> Web
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Proyek Terbaru Section -->
+    <section class="section-padding bg-light-custom" id="proyek-terbaru">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Portfolio</span>
+                <h2 class="section-title">Proyek Terbaru</h2>
+                <p class="section-description">Beberapa proyek terbaik yang pernah saya kerjakan menggunakan teknologi Python dan Flask.</p>
+            </div>
+            <div class="row g-4">
+                {% for proyek in proyek_list %}
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                    <div class="card-proyek">
+                        <div class="card-proyek-img">
+                            <img src="{{ url_for('static', filename='img/' + proyek.gambar) }}" alt="{{ proyek.judul }}" loading="lazy">
+                            <div class="card-proyek-overlay">
+                                <a href="{{ url_for('detail_proyek', proyek_id=proyek.id) }}" class="btn-view">
+                                    <i class="fas fa-eye"></i> Lihat Detail
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-proyek-body">
+                            <h5 class="card-proyek-title">{{ proyek.judul }}</h5>
+                            <p class="card-proyek-desc">{{ proyek.deskripsi[:100] }}...</p>
+                            <div class="card-proyek-tags">
+                                {% for tech in proyek.teknologi[:3] %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-5">
+                <a href="{{ url_for('proyek') }}" class="btn btn-primary-custom">
+                    Lihat Semua Proyek <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Highlight -->
+    <section class="section-padding" id="skills-highlight">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Keahlian</span>
+                <h2 class="section-title">Teknologi yang Dikuasai</h2>
+            </div>
+            <div class="row g-3">
+                {% for keahlian in keahlian_list %}
+                <div class="col-6 col-md-4 col-lg-2 text-center" data-aos="zoom-in">
+                    <div class="skill-mini">
+                        <i class="{{ keahlian.ikon }}"></i>
+                        <p>{{ keahlian.nama }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HALAMAN TENTANG ===================== -->
+    {% elif halaman == 'tentang' %}
+    <section class="page-header bg-primary-custom text-white">
+        <div class="container">
+            <h1 class="page-title">Tentang Saya</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-white">Beranda</a></li>
+                    <li class="breadcrumb-item active text-white">Tentang</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="about-image">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <span class="section-subtitle">Perkenalan</span>
+                    <h2 class="section-title text-start">Saya {{ profil.nama }}</h2>
+                    <p class="lead">{{ profil.tagline }}</p>
+                    <p>{{ profil.deskripsi }}</p>
+                    <p>Saya memiliki ketertarikan kuat dalam membangun aplikasi web yang efisien, dapat diandalkan, dan mudah dipelihara. Saat ini saya fokus mendalami ekosistem Python, khususnya framework Flask untuk pengembangan backend, serta mempelajari arsitektur RESTful API dan integrasi database relasional.</p>
+                    <div class="row mt-4">
+                        <div class="col-sm-6 mb-3">
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email</strong>
+                                    <span>{{ profil.email }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Telepon</strong>
+                                    <span>{{ profil.telepon }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Lokasi</strong>
+                                    <span>{{ profil.lokasi }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="info-item">
+                                <i class="fas fa-laptop-code"></i>
+                                <div>
+                                    <strong>Status</strong>
+                                    <span>Tersedia untuk proyek freelance</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section dengan progress bar -->
+    <section class="section-padding bg-light-custom">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Skill</span>
+                <h2 class="section-title">Keahlian Teknis</h2>
+                <p class="section-description">Tingkat penguasaan teknologi yang saya pelajari dan gunakan dalam berbagai proyek.</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% for keahlian in keahlian_list %}
+                    <div class="skill-item mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="skill-name"><i class="{{ keahlian.ikon }} me-2"></i>{{ keahlian.nama }}</span>
+                            <span class="skill-percent">{{ keahlian.persentase }}%</span>
+                        </div>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" data-width="{{ keahlian.persentase }}"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HALAMAN PROYEK ===================== -->
+    {% elif halaman == 'proyek' %}
+    <section class="page-header bg-primary-custom text-white">
+        <div class="container">
+            <h1 class="page-title">Portfolio Proyek</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-white">Beranda</a></li>
+                    <li class="breadcrumb-item active text-white">Proyek</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <span class="section-subtitle">Karya Saya</span>
+                <h2 class="section-title">Daftar Semua Proyek</h2>
+                <p class="section-description">Berikut adalah kumpulan proyek yang pernah saya kerjakan, mulai dari aplikasi desktop, web, hingga integrasi API pihak ketiga.</p>
+            </div>
+            <div class="row g-4">
+                {% for proyek in proyek_list %}
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                    <div class="card-proyek">
+                        <div class="card-proyek-img">
+                            <img src="{{ url_for('static', filename='img/' + proyek.gambar) }}" alt="{{ proyek.judul }}" loading="lazy">
+                            <div class="card-proyek-overlay">
+                                <a href="{{ url_for('detail_proyek', proyek_id=proyek.id) }}" class="btn-view">
+                                    <i class="fas fa-eye"></i> Lihat Detail
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-proyek-body">
+                            <h5 class="card-proyek-title">{{ proyek.judul }}</h5>
+                            <p class="card-proyek-desc">{{ proyek.deskripsi[:100] }}...</p>
+                            <div class="card-proyek-tags">
+                                {% for tech in proyek.teknologi[:3] %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HALAMAN DETAIL PROYEK ===================== -->
+    {% elif halaman == 'detail_proyek' %}
+    <section class="page-header bg-primary-custom text-white">
+        <div class="container">
+            <h1 class="page-title">{{ proyek.judul }}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-white">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('proyek') }}" class="text-white">Proyek</a></li>
+                    <li class="breadcrumb-item active text-white">{{ proyek.judul }}</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="detail-proyek-img mb-4">
+                        <img src="{{ url_for('static', filename='img/' + proyek.gambar) }}" alt="{{ proyek.judul }}" class="img-fluid rounded">
+                    </div>
+                    <h2 class="mb-3">{{ proyek.judul }}</h2>
+                    <p class="lead">{{ proyek.deskripsi }}</p>
+                    <p>Proyek ini dikembangkan sebagai bagian dari pembelajaran integrasi teknologi modern dalam membangun aplikasi web yang dapat diakses publik. Implementasi mencakup aspek front-end yang responsif serta back-end yang aman dan efisien.</p>
+                    <div class="my-4">
+                        <h5 class="mb-3">Teknologi yang Digunakan</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for tech in proyek.teknologi %}
+                            <span class="tech-tag tech-tag-lg">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="{{ proyek.link }}" class="btn btn-primary-custom">
+                        <i class="fas fa-external-link-alt me-1"></i> Kunjungi Proyek
+                    </a>
+                    <a href="{{ url_for('proyek') }}" class="btn btn-outline-custom ms-2">
+                        <i class="fas fa-arrow-left me-1"></i> Kembali
+                    </a>
+                </div>
+                <div class="col-lg-4">
+                    <div class="proyek-sidebar">
+                        <h5 class="mb-3">Informasi Proyek</h5>
+                        <ul class="list-unstyled">
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span><i class="fas fa-tag me-2"></i>Kategori</span>
+                                <strong>Web Development</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span><i class="fas fa-calendar me-2"></i>Tahun</span>
+                                <strong>2025</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2 border-bottom">
+                                <span><i class="fas fa-user me-2"></i>Klien</span>
+                                <strong>Tugas Akademik</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-2">
+                                <span><i class="fas fa-code-branch me-2"></i>Status</span>
+                                <strong>Completed</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HALAMAN KONTAK ===================== -->
+    {% elif halaman == 'kontak' %}
+    <section class="page-header bg-primary-custom text-white">
+        <div class="container">
+            <h1 class="page-title">Hubungi Saya</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-white">Beranda</a></li>
+                    <li class="breadcrumb-item active text-white">Kontak</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <span class="section-subtitle">Kontak</span>
+                    <h2 class="section-title text-start">Mari Berkolaborasi</h2>
+                    <p class="mb-4">Tertarik bekerja sama atau memiliki pertanyaan? Silakan hubungi saya melalui form atau langsung melalui kontak di bawah ini. Saya akan merespons secepatnya.</p>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h6>Lokasi</h6>
+                                <p>{{ profil.lokasi }}</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h6>Email</h6>
+                                <p>{{ profil.email }}</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div>
+                                <h6>Telepon</h6>
+                                <p>{{ profil.telepon }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="contact-form-wrapper">
+                        <!-- Flash messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form method="POST" action="{{ url_for('kontak') }}">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" name="nama" class="form-control" placeholder="Nama Anda" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" placeholder="email@contoh.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Subjek</label>
+                                    <input type="text" name="subjek" class="form-control" placeholder="Subjek pesan">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Pesan</label>
+                                    <textarea name="pesan" class="form-control" rows="5" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary-custom w-100">
+                                        <i class="fas fa-paper-plane me-2"></i> Kirim Pesan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HALAMAN 404 ===================== -->
+    {% elif halaman == '404' %}
+    <section class="d-flex align-items-center min-vh-100">
+        <div class="container text-center">
+            <h1 class="error-code">404</h1>
+            <h2 class="mb-3">Halaman Tidak Ditemukan</h2>
+            <p class="text-muted mb-4">Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary-custom">
+                <i class="fas fa-home me-1"></i> Kembali ke Beranda
+            </a>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 {{ profil.nama }}. Dibuat dengan <i class="fas fa-heart text-danger"></i> & Flask.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-social">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="mailto:{{ profil.email }}" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="backToTop" aria-label="Kembali ke atas">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap 5 JS Bundle (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS - Animate On Scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
