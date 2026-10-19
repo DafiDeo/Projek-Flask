@@ -101,15 +101,6 @@ Buka browser dan kunjungi: **http://127.0.0.1:5000**
 | `/proyek/<int:proyek_id>` | GET | Detail satu proyek berdasarkan ID |
 | `/kontak` | GET, POST | Form kontak dengan flash messages |
 
-## Sumber Template
-
-Template portfolio ini terinspirasi dari template gratis yang tersedia di:
-- [BootstrapMade](https://bootstrapmade.com/) - Free Bootstrap templates
-- [Start Bootstrap](https://startbootstrap.com/) - Free Bootstrap themes
-- [Colorlib](https://colorlib.com/) - Free HTML templates
-
-Template kemudian diintegrasikan dan dimodifikasi untuk sesuai dengan struktur Flask (memindahkan CSS ke `static/css/`, JS ke `static/js/`, dan HTML ke `templates/`).
-
 ## Kontribusi
 
 Pull requests dipersilakan. Untuk perubahan besar, silakan buka issue terlebih dahulu untuk mendiskusikan perubahan yang diinginkan.
@@ -120,8 +111,8 @@ MIT License - bebas digunakan untuk keperluan akademik maupun komersial.
 
 ## Author
 
-**Nama Mahasiswa**  
-Sistem Informasi / Teknik Informatika  
+**Dafi Deo Ananda Nurrokhim**  
+Sistem dan Teknologi Informasi
 Tugas Individu 3 - Pengenalan Flask (Pertemuan 7)  
 Dosen: Abdullah Faqih Septiyanto, S.Kom., M.Kom
 
