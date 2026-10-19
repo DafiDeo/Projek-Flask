@@ -39,6 +39,7 @@ portfolio-flask/
 │   ├── js/
 │   │   └── script.js          # Custom JavaScript
 │   └── img/
+│       ├── Foto.jpg           # Foto Profil
 │       ├── favicon.svg        # Favicon
 │       └── proyek-{1-6}.svg   # Gambar placeholder proyek
 ├── templates/
