@@ -74,6 +74,7 @@ PROFIL = {
     "telepon": "+62 812 3044 8300",
     "lokasi": "Surabaya, Indonesia",
     "deskripsi": "Mahasiswa Sistem Informasi yang antusias dalam pengembangan web backend dengan Python dan Flask. Memiliki minat besar pada arsitektur aplikasi yang bersih, skalabilitas, dan best practices dalam software engineering.",
+    "foto": "Foto.jpg",
 }
 
 

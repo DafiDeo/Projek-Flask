@@ -279,6 +279,27 @@ h1, h2, h3, h4, h5, h6 {
     to { transform: rotate(360deg); }
 }
 
+/* Foto profil di hero section */
+.hero-image-circle .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    border: 6px solid var(--white);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Foto profil di halaman tentang */
+.about-image .about-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 8px solid var(--white);
+}
+
 .floating-badge {
     position: absolute;
     background-color: var(--white);

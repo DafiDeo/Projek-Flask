@@ -83,7 +83,12 @@
                 <div class="col-lg-6 text-center" data-aos="fade-left">
                     <div class="hero-image-wrapper">
                         <div class="hero-image-circle">
-                            <i class="fas fa-user-tie"></i>
+                            {% if profil.foto %}
+                                <img src="{{ url_for('static', filename='img/' + profil.foto) }}" alt="{{ profil.nama }}" class="profile-img" onerror="this.style.display='none'; this.parentElement.querySelector('.profile-icon-fallback').style.display='block';">
+                                <i class="fas fa-user-tie profile-icon-fallback" style="display: none;"></i>
+                            {% else %}
+                                <i class="fas fa-user-tie"></i>
+                            {% endif %}
                         </div>
                         <div class="floating-badge badge-1">
                             <i class="fab fa-python"></i> Python
@@ -180,7 +185,12 @@
             <div class="row align-items-center">
                 <div class="col-lg-5 mb-4 mb-lg-0">
                     <div class="about-image">
-                        <i class="fas fa-user-graduate"></i>
+                        {% if profil.foto %}
+                            <img src="{{ url_for('static', filename='img/' + profil.foto) }}" alt="{{ profil.nama }}" class="about-profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <i class="fas fa-user-graduate" style="display: none;"></i>
+                        {% else %}
+                            <i class="fas fa-user-graduate"></i>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-lg-7">
