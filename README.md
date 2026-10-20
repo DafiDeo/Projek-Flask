@@ -32,7 +32,7 @@ Aplikasi portfolio ini mendemonstrasikan integrasi template HTML gratis yang diu
 ## Struktur Proyek
 
 ```
-portfolio-flask/
+proyek-flask/
 ├── static/
 │   ├── css/
 │   │   └── style.css          # Custom CSS - tema Modern Biru
